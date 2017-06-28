@@ -1,0 +1,26 @@
+{
+  "name": "bpc",
+  "version": "1.0.0",
+  "description": "for bpc regression",
+  "main": "index.js",
+  "scripts": {
+    "setup": "npm install && npm install -g nightwatch",
+    "test": "nightwatch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/overfly83/bpc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/overfly83/bpc/issues"
+  },
+  "homepage": "https://github.com/overfly83/bpc#readme",
+  "devDependencies": {
+    "env2": "^2.2.0",
+    "minimist": "^1.2.0",
+    "selenium-server-standalone-jar": "^3.4.0"
+  },
+  "dependencies": {}
+}

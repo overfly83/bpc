@@ -1,10 +1,16 @@
 module.exports = {
 
   	'Demo test' : function (browser) {
-    	browser
-      		.url(browser.launch_url)
-      		.pause(5000)
-      		// ...
-      		.end();
+  		var logonpage = browser.page.logon();
+  		var navigation = browser.page.navigation.navigation();
+
+  		browser.url(browser.launch_url);
+  		logonpage.setValue('@username','zhanged')
+  		.setValue('@password','123456')
+  		.logon();
+  		navigation.navigate("Library");
+
+    	browser.end();
   	}
+
 };

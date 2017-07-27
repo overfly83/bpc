@@ -5,14 +5,10 @@ const selenium_server = require('selenium-server-standalone-jar');
 
 var args = require('minimist')(process.argv);
 var browserName;
-var launchURL, test_env;
-function UserException(message) {
-   this.message = message;
-   this.name = 'UserException';
-}
+var launchURL;
+
 
 (function(browser_name,env){
-  console.log('env is: '+env);
 
 	if(!browser_name || typeof browser_name === "boolean"){
 		browserName = process.env.browser.trim().toLowerCase();

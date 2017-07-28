@@ -1,5 +1,6 @@
-os = require('os');
-const env = require('env2')('env.json');
+require('os');
+require('env2')('config/env.json');
+require('env2')('config/exclude.json');
 const OUTPUTS = 'outputs';
 const selenium_server = require('selenium-server-standalone-jar');
 
@@ -9,6 +10,7 @@ var launchURL;
 
 
 (function(browser_name,env){
+  console.log(process.env.exclude);
 
 	if(!browser_name || typeof browser_name === "boolean"){
 		browserName = process.env.browser.trim().toLowerCase();
@@ -56,17 +58,21 @@ module.exports = {
   "src_folders": process.env.src_folders,
   "page_objects_path" : "PageObject",
   "globals_path" : "",
+
   "output_folder": OUTPUTS + '/reports', // reports (test outcome) output by nightwatch
   'test_workers' : {
     "enabled" : true, 
     "workers" : 2
   },
+  "use_xpath" : true, 
   "selenium": { // downloaded by selenium-download module (see readme) 
     "start_process": true, // tells nightwatch to start/stop the selenium process 
     "server_path": selenium_server.path,
-    "log_path" : OUTPUTS + '/log',
+    "log_path" : OUTPUTS + '/logs',
+
+      
     "host": "127.0.0.1",
-    "port": 4444, // standard selenium port 
+    "port": 4444, // standard selenium port
     "cli_args": {
       "webdriver.chrome.driver" : chromedriver_path,
       "webdriver.gecko.driver" : geckodriver_path,
@@ -77,10 +83,15 @@ module.exports = {
 
   "test_settings": {
     "default": {
+      "exclude" : process.env.exclude,
+      
       "screenshots": {
-        "enabled": true, // if you want to keep screenshots 
+        "enabled": true, // if you want to keep screenshots
+        "on_failure": true,
+        "on_error": true,
         "path": OUTPUTS + '/screenshots/' // save screenshots here 
       },
+      
       'launch_url' : launchURL,
       "globals": {
         "waitForConditionTimeout": 5000

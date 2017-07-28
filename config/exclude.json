@@ -1,0 +1,3 @@
+{
+	"exclude" : "["tests/demo2.js","tests/demo3.js"]"
+}

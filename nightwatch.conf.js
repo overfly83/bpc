@@ -1,16 +1,28 @@
 require('os');
 require('env2')('config/env.json');
-require('env2')('config/exclude.json');
+
 const OUTPUTS = 'outputs';
 const selenium_server = require('selenium-server-standalone-jar');
 
 var args = require('minimist')(process.argv);
 var browserName;
 var launchURL;
-
+var exc = [];
 
 (function(browser_name,env){
-  console.log(process.env.exclude);
+  var fs = require('fs');
+  if(!fs.existsSync(OUTPUTS+'/logs')){
+    fs.mkdirSync(OUTPUTS+'/logs');
+  }
+
+  var lineReader = require('readline').createInterface({
+    input: require('fs').createReadStream('config/exclude.txt')
+  });
+  lineReader.on('line', function(line){
+    if(!line.startsWith('//')){
+      exc.push(line);
+    }
+  });
 
 	if(!browser_name || typeof browser_name === "boolean"){
 		browserName = process.env.browser.trim().toLowerCase();
@@ -55,6 +67,7 @@ var chromedriver_path, iedriver_path, geckodriver_path, edgedriver_path;
 })();
 
 module.exports = {
+  
   "src_folders": process.env.src_folders,
   "page_objects_path" : "PageObject",
   "globals_path" : "",
@@ -64,7 +77,7 @@ module.exports = {
     "enabled" : true, 
     "workers" : 2
   },
-  "use_xpath" : true, 
+  
   "selenium": { // downloaded by selenium-download module (see readme) 
     "start_process": true, // tells nightwatch to start/stop the selenium process 
     "server_path": selenium_server.path,
@@ -82,9 +95,10 @@ module.exports = {
   },
 
   "test_settings": {
+
     "default": {
-      "exclude" : process.env.exclude,
-      
+      "exclude" : exc,
+      "use_xpath" : true,
       "screenshots": {
         "enabled": true, // if you want to keep screenshots
         "on_failure": true,

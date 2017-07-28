@@ -13,12 +13,15 @@ module.exports = {
   	elements: {
     	username: { 
       		selector: '//input[@id="username"]',
+      		locateStrategy: 'xpath'
     	},
 	    password: { 
-	      	selector: '//input[@id="password"]', 
+	      	selector: '//input[@id="password"]',
+	      	locateStrategy: 'xpath'
 	    },
 	    logonButton : {
 	    	selector: '//a[@id="logonBtn"]',
+	    	locateStrategy: 'xpath'
 	    }
   	}
 };

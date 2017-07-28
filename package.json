@@ -20,6 +20,7 @@
   "devDependencies": {
     "env2": "^2.2.0",
     "minimist": "^1.2.0",
+    "nightwatch-html-reporter": "^2.0.2",
     "selenium-server-standalone-jar": "^3.4.0"
   },
   "dependencies": {}
